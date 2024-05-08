@@ -42,7 +42,7 @@ public:
 		t[rs(p)].mark += t[p].mark;
 		t[p].mark = 0;
 	}
-	//³õÊ¼»¯
+	//åˆå§‹åŒ–
 	void build(ll p = 1, ll l = 1, ll r = n)
 	{
 		//			t[p].l = l;
@@ -57,7 +57,7 @@ public:
 		build(rs(p), mid + 1, r);
 		push_up(p);
 	}
-	//Çø¼äĞŞ¸Ä
+	//åŒºé—´ä¿®æ”¹
 	void update(ll tl, ll tr, ll k, ll p = 1, ll l = 1, ll r = n)
 	{
 		if (l >= tl && r <= tr)
@@ -79,7 +79,7 @@ public:
 		push_up(p);
 		return ;
 	}
-	//Çø¼äºÍ²éÑ¯
+	//åŒºé—´å’ŒæŸ¥è¯¢
 	ll query(ll tl, ll tr, ll p = 1, ll l = 1, ll r = n )
 	{
 		if (l >= tl && r <= tr)
@@ -121,11 +121,11 @@ int main()
 		cin >> t ;
 		switch (t)
 		{
-			case 1://¼ÓÉÏk
+			case 1://åŠ ä¸Šk
 			cin >> tl >> tr >> k;
 			A.update(tl, tr, k);
 			break;
-			case 2:	//²éÑ¯
+			case 2:	//æŸ¥è¯¢
 			cin >> tl >> tr;
 			x = A.query(tl, tr) ;
 			cout <<	x << "\n";
