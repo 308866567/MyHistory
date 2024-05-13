@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const ll N = 1e6 + 10;
+#define rep(i, start, end) for (ll i = start; i <= end; i++)
+#define rrep(i, start, end) for (ll i = start; i >= end; i--)
+#define INF 0x3f3f3f3f
+const ll mod= 1e9+7;
+ll n;
+string s;
+ll arr[N];
+void solve()
+{
+	cin >> n;
+	rep(i, 1, n)
+	{
+		cin >> arr[i];
+	}
+	cin >> s;
+	ll now = 1;
+	ll ans = 0;
+	for (char t : s)
+	{
+		if (t == 'R')
+		{
+			
+			now++;
+			if (now > n)
+			{
+				now = n;
+			}
+			ans += arr[now];
+		}
+		else
+		{
+			now--;
+			if (now < 1)
+			{
+				now = 1;
+			}
+			ans += arr[now];
+		}
+		// cout<<arr[now]<<" ";
+		ans%=mod;
+	}
+	cout<<ans<<"\n";
+}
+int main()
+{
+#ifdef LOCAL
+	freopen("/home/xiaobingdu/code/c++/in.txt", "r", stdin);
+#endif
+	ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+	ll t = 1;
+	// cin >> t;
+	while (t--)
+	{
+		solve();
+	}
+	return 0;
+}
