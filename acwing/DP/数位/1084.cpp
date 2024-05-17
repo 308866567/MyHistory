@@ -6,12 +6,58 @@ const ll N = 1e6 + 10;
 #define rrep(i, start, end) for (ll i = start; i >= end; i--)
 #define INF 0x3f3f3f3f
 const ll mod = 1e9 + 7;
-ll n;
+ll a, b, m;
+ll f[111][111]; // 长度i,各位数字和%m等于j的个数
+void init()
+{
+	rep(i, 0, m - 1)
+	{
+		f[1][i] = 1;
+	}
+	rep(i, 2, 30)
+	{
+		rep(j, 0, m - 1)
+		{
+			rep(k, 0, 9)
+			{
+				f[i][j] += f[i - 1][(j - k + m) % m];
+			}
+		}
+	}
+}
+ll dfs(ll n)
+{
+	if (!n)
+		return 1;
+	ll res = 0;
+	vector<ll> nums;
+	while (n)
+		nums.emplace_back(n % 10), n /= 10;
+	ll last = 0; // 数字和
+	// 高位往低位
+	rep(i, nums.size() - 1, 0)
+	{
+		ll x = nums[i];
+		// 首位插入[0,x-1]
+		rep(j, 0, x - 1)
+		{
+			rep(k, 0, m - 1)
+			{
+				if ((last + j + k) % m == 0)
+					res += f[i][k];
+			}
+		}
+		last = (last + x) % m;
+		if (!i)
+			res++;
+	}
+	return res;
+}
 void solve()
 {
-	cin >> n;
+	cin >> a >> b >> m;
+	cout << dfs(b) - dfs(a - 1) << "\n";
 }
-
 
 int main()
 {
