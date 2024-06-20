@@ -5,12 +5,12 @@ const ll N = 1e5 + 3;
 using namespace std;
 ll n;
 ll a[N] = {0}, b[N] = {0};
-int t[N] = {0}; // usedÊı×é,²éÑ¯Ç°×ººÍ
+int t[N] = {0}; // usedæ•°ç»„,æŸ¥è¯¢å‰ç¼€å’Œ
 inline ll lowbit(ll x)
 {
     return x & (-x);
 }
-// µ¥µã²éÑ¯1-xµÄÇ°×ººÍ
+// å•ç‚¹æŸ¥è¯¢1-xçš„å‰ç¼€å’Œ
 inline ll query(ll x)
 {
     ll sum = 0;
@@ -20,7 +20,7 @@ inline ll query(ll x)
     }
     return sum;
 }
-// µ¥µãĞŞ¸Ä
+// å•ç‚¹ä¿®æ”¹
 inline void update(ll x, ll k)
 {
     for (int i = x; i <= n; i += lowbit(i))
@@ -39,7 +39,7 @@ int main()
     {
         cin >> a[i];
     }
-    // ³õÊ¼»¯
+    // åˆå§‹åŒ–
     for (int i = 1; i <= n; i++)
     {
         update(i, 1);
@@ -50,7 +50,7 @@ int main()
         while (l < r)
         {
             mid = l + r >> 1;
-            // ×ó²à
+            // å·¦ä¾§
             if (query(mid) >= a[i]+1)
                 r = mid;
             else
