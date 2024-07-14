@@ -1,63 +1,44 @@
 #include <bits/stdc++.h>
-#include<map>
+// #include<iostream>
 using namespace std;
 typedef long long ll;
-const ll N = 1e4 + 10;
+const ll N = 1e3 + 10;
 #define rep(i, start, end) for (ll i = start; i <= end; i++)
 #define rrep(i, start, end) for (ll i = start; i >= end; i--)
 #define INF 0x3f3f3f3f
 const ll mod = 1e9 + 7;
-typedef  pair<ll, ll> pii;
 ll n;
-ll l, r;
+ll L, R;
 char a[N];
-ll s1[N];
-ll ans = 0;
-ll dfs(ll tl, ll tr);
+ll f[N][N];
+ll s0[N],s1[N];
 void solve()
 {
-    cin >> n;
-    cin >> l >> r;
-    rep(i, 1, n)
-    {
-        cin >> a[i];
-        if (a[i] == '1')
-        {
-            s1[i]++;
-        }
-        s1[i] += s1[i - 1];
+    cin >> n >> L >> R;
+    cin >> a + 1;
+    // cout << a + 1;
+    rep(i,1,n){
+        if(a[i]=='0') s0[i]++;
+        else s1[i]++;
+        s0[i]+=s0[i-1];
+        s1[i]+=s1[i-1];
     }
-    dfs(1, n);
-    cout << ans << "\n";
-}
-map<pii, ll> g;
-ll dfs(ll tl, ll tr)
-{
-    if (tl >= tr)
-        return 0;
-    if (g.count(pii(tl, tr)) != 0)
-        return g[pii(tl, tr)];
-    ll maxx = 0;
-    ll ss0 = 0, ss1 = s1[tr] - s1[tl - 1];
-    rep(i, tl, tr)
+    for (ll len = 2; len <= n; len++)
     {
-        if (a[i] == '0')
+        for (ll l = 1; l + len - 1 <= n; l++)
         {
-            ss0++;
-        }
-        else if (a[i] == '1')
-        {
-            ss1--;
-        }
-        if (abs(ss0 - ss1) >= l && abs(ss0 - ss1) <= r)
-        {
-            ll sum = 0;
-            sum += dfs(tl, i);
-            sum += dfs(i + 1, tr);
-            maxx = max(sum, maxx);
+            ll r = l + len - 1;
+            //k后切割
+            for(ll k=l;k<r;k++){
+                //合并条件,左0-右1在[L,R]里
+                ll t=abs(s0[k]-s0[l-1]-(s1[r]-s1[k]));
+                if(t>=L&&t<=R)
+                    f[l][r]=max(f[l][r],f[l][k]+f[k+1][r]+1);
+            }
+            // cout<<l<<"-"<<r<<"="<<f[l][r]<<"\n";
         }
     }
-    return maxx;
+    cout<<f[1][n]<<"\n";
 }
 
 int main()
